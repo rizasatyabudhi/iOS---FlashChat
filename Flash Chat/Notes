@@ -3,3 +3,11 @@
 3. Mandatory for creating tableView :
     a. What cell to be displayed
     b. How many cells
+
+4. to show keyboard in textField, we use
+    textFieldDidBeginEditing : is when the textField is pressed, show the keyboard
+    textFieldDidEndEditing : is when the textField is out of focus (we press outside the textField), close down the keyboard, but we have to trigger it (not automatically closed) , so we use
+        let tapGesture = UITapGestureRecognizer(target: self, action:#selector(tableViewTapped))
+
+
+
