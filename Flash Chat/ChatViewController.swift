@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import Firebase
 
 
-class ChatViewController: UIViewController {
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+    
     
     // Declare instance variables here
 
@@ -26,7 +29,8 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         
         //TODO: Set yourself as the delegate and datasource here:
-        
+        messageTableView.delegate = self
+        messageTableView.dataSource = self
         
         
         //TODO: Set yourself as the delegate of the text field here:
@@ -37,8 +41,11 @@ class ChatViewController: UIViewController {
         
         
 
+        // STEP 2 (tableView creation)
         //TODO: Register your MessageCell.xib file here:
-
+        // nibName = messageCell.xib filename
+        // identifier = name of the custom cell identifier
+        messageTableView.register(UINib(nibName: "messageCell", bundle: nil), forCellReuseIdentifier: "customMessageCell")
         
     }
 
@@ -47,13 +54,25 @@ class ChatViewController: UIViewController {
     //MARK: - TableView DataSource Methods
     
     
-    
+    // STEP 1 (tableView creation)
     //TODO: Declare cellForRowAtIndexPath here:
-    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // we use custom cell we have created
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customMessageCell", for: indexPath) as! CustomMessageCell
+        let messageArray = ["First Message","Seccond Message","Third Message"]
+        
+        // we tap into "cell" that has property messageBody and set its value
+        cell.messageBody.text = messageArray[indexPath.row]
+        return cell
+    }
     
     
     //TODO: Declare numberOfRowsInSection here:
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        <#code#>
+    }
     
+
     
     
     //TODO: Declare tableViewTapped here:
@@ -105,10 +124,14 @@ class ChatViewController: UIViewController {
     
     
     @IBAction func logOutPressed(_ sender: AnyObject) {
-        
         //TODO: Log out the user and send them back to WelcomeViewController
-        
-        
+        do {
+            try Auth.auth().signOut()
+            // viewController is a stack, so we use "pop" to get to the "root/first" stack
+            navigationController?.popToRootViewController(animated: true)
+        } catch {
+            print("something is wrong")
+        }
     }
     
 

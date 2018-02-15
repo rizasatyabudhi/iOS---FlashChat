@@ -1,0 +1,5 @@
+1. to create segue from login button to login screen --> ctrl+drag the button into the loginViewController, don't forget to give the segue an identity 
+2. to make password titik titik item, go to passwordTextField property, check the "secure text entry"
+3. Mandatory for creating tableView :
+    a. What cell to be displayed
+    b. How many cells
